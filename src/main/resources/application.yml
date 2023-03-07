@@ -1,6 +1,23 @@
-
-
 spring:
-  thymeleaf:
-    suffix: .html
-    prefix: classpath:/templates/
+  datasource:
+    url: jdbc:mysql://localhost:3305/minicampus
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: minicampus_user
+    password: 1111
+
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: wsh05925@gmail.com
+    password: kwbvsqfxpzgbufnu
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true

@@ -1,4 +1,4 @@
-package com.zerobase.fastlms;
+package com.zerobase.fastlms.main.controller;
 
 // MainPage 라는 클래스를 만든 목적 ?
 // 매핑하기 위해서.
@@ -13,6 +13,8 @@ package com.zerobase.fastlms;
 
 // http://localhost:8080/
 
+import com.zerobase.fastlms.components.MailComponents;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -22,9 +24,15 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 //@RestController // 주소를 매핑하는 특정한 클래스가 컨트롤러이다. Controller 가 아닌 RestController 를 쓴 이유는 나중에..
+@RequiredArgsConstructor
 @Controller // Controller 는 그대로 return이 불가능.. RestController 라면 return "hello"; 이런 것을 그대로 뿜어낼 수 있지만, Controller는 그렇게 하려면 서블릿을 이용할 것(일단 예제에선 ㅇㅇ)
 public class MainController {
 
+    private final MailComponents mailComponents;
+
+    /**
+     *메인 페이지
+     */
     @RequestMapping("/")
     public String index() {
         return "index";
