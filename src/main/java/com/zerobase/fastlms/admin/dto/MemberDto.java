@@ -1,25 +1,30 @@
-package com.zerobase.fastlms.member.model;
+package com.zerobase.fastlms.admin.dto;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 
 @Data
-@ToString
-public class MemberInput {
+public class MemberDto {
+    String userId;
+    String userName;
+    String phone;
+    String password;
+    LocalDateTime regDt;
 
-    private String userId;
-    private String userName;
-    private String password;
-    private String phone;
+    boolean emailAuthYn;
+    LocalDateTime emailAuthDt;
+    String emailAuthKey;
 
-    private LocalDateTime loginDt;
-    private String connectIp;
-    private String connectUserAgent;
+
+    String resetPasswordKey;
+    LocalDateTime resetPasswordLimitDt;
+    boolean adminYn;
+
+    LocalDateTime loginDt;
+    String connectIp;
+    String connectUserAgent;
 
     public String getClientIp(HttpServletRequest req) { // ip 가져오기
         connectIp = req.getHeader("X-Forwarded-For");
@@ -31,5 +36,4 @@ public class MemberInput {
         connectUserAgent = req.getHeader("User-Agent");
         return connectUserAgent;
     }
-
 }

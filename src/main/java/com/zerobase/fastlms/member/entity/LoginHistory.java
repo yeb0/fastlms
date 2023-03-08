@@ -1,21 +1,22 @@
-package com.zerobase.fastlms.member.model;
+package com.zerobase.fastlms.member.entity;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Entity
 @ToString
-public class MemberInput {
-
+public class LoginHistory {
+    @Id
     private String userId;
-    private String userName;
-    private String password;
-    private String phone;
 
     private LocalDateTime loginDt;
     private String connectIp;
@@ -31,5 +32,4 @@ public class MemberInput {
         connectUserAgent = req.getHeader("User-Agent");
         return connectUserAgent;
     }
-
 }

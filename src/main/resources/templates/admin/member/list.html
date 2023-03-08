@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+  <title>관리자 화면</title>
+  <style>
+    .list table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .list table th, .list table td {
+      border:solid 1px #000;
+    }
+  </style>
+</head>
+<body>
+<h1>관리자 회원 관리</h1>
+<div>
+  <a href="/admin/main.do">관리자 메인</a>
+  |
+  <a href="/admin/member/list.do">회원 관리</a>
+  |
+  <a href="#">카테고리 관리</a>
+  |
+  <a href="#">강의 관리</a>
+  |
+  <a href="/member/logout">로그아웃</a>
+  <br/>
+</div>
+
+<div class = "list">
+  <table>
+    <thead>
+      <th>
+        NO
+      </th>
+      <th>
+        아이디(이메일)
+      </th>
+      <th>
+        이름
+      </th>
+      <th>
+        연락처
+      </th>
+      <th>
+        이메일 인증 여부
+      </th>
+      <th>
+        가입일
+      </th>
+      <th>
+        관리자여부
+      </th>
+      <th>
+        마지막 로그인 일자
+      </th>
+    </thead>
+    <tbody>
+    <tr th:each="x : ${list}">
+      <td>1</td>
+      <td th:text="${x.userId}">s110528@nate.com</td>
+      <td th:text="${x.userName}">우상훈</td>
+      <td th:text="${x.phone}">010-1234-1234</td>
+      <td>
+        <p th:if="${x.emailAuthYn}">Y</p>
+        <p th:if="${x.emailAuthYn eq false}">N</p>
+      </td>
+      <td>
+        <p th:text="${x.regDt}">2021.01.01</p>
+      </td>
+      <td>
+        <p th:if="${x.adminYn}">Y</p>
+        <p th:if="${x.adminYn eq false}">N</p>
+      </td>
+      <td>
+        <p th:text="${x.loginDt}">2023.03.03</p>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+
+</div>
+
+</body>
+</html>

@@ -13,9 +13,12 @@ package com.zerobase.fastlms.main.controller;
 
 // http://localhost:8080/
 
+import com.zerobase.fastlms.Utils;
 import com.zerobase.fastlms.components.MailComponents;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.util.RequestUtil;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +37,21 @@ public class MainController {
      *메인 페이지
      */
     @RequestMapping("/")
-    public String index() {
+    public String index(HttpServletRequest request) {
+//        String userAgent = RequestUtils.getUserAgent(request);
+//        String clientIp = RequestUtils.getClientIp(request);
+
+//        String agent = request.getHeader("User-Agent"); // agent
+//        System.out.println(agent);
+//
+//        System.out.println("###########");
+//        String userIp = Utils.getClientIp(request);
+//        System.out.println(userIp);
+
+//        log.info(userAgent);
+//        log.info(clientIp);
+
+
         return "index";
     }
 
@@ -63,31 +80,13 @@ public class MainController {
     // 백엔드 과정 -> view 까진.. 안 감 -> 프론트엔드가 함.
     // 어쨌든 백엔드도 당연 웹이기에 알긴 해야함. V -> HTML -> 웹페이지
     // V -> json -> api (백엔드)
-
-
     // request -> web -> server
-
     // response -> server -> web
-    @RequestMapping("/hello")
-    public void hello(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        response.setContentType("text/html");
-        response.setCharacterEncoding("UTF-8");
 
-        PrintWriter writer = response.getWriter();
-        String msg = "<html>" +
-                "<head>" +
-                "<meta charset=\"UTF-8\">" +
-                "</head>" +
-                "<body>" +
-                "<p>hello</p> <p>fastlms website</p>" +
-                "<p> 안녕하세요 ! </p>" +
-                "</body>" +
-                "</html>";
-
-        writer.write(msg);
-        writer.close();
-
+    @RequestMapping("/error/denied")
+    public String errorDenied() {
+        return "error/denied";
     }
 
 }

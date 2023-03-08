@@ -1,5 +1,7 @@
 package com.zerobase.fastlms.configuration;
 
+import com.zerobase.fastlms.member.repository.MemberLoginRepository;
+import com.zerobase.fastlms.member.repository.MemberRepository;
 import com.zerobase.fastlms.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +22,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final MemberService memberService; // Security 에 알려주기 위함
 
+    private final MemberLoginRepository memberLoginRepository;
+    private final MemberRepository memberRepository;
+
+
     @Bean
     PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
@@ -29,6 +35,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     UserAuthenticationFailureHandler getFailureHandler() {
         return new UserAuthenticationFailureHandler();
     }
+
+    @Bean
+    UserAuthenticationSuccessHandler getSuccessHandler() {
+        return new UserAuthenticationSuccessHandler(memberLoginRepository);
+    }
+
 
 
     @Override
@@ -44,18 +56,39 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/",
                         "/member/register",
-                        "/member/email-auth")
+                        "/member/email-auth",
+                        "/member/find/password",
+                        "/member/reset/password")
                 .permitAll(); // 권한을 다 허용하겠다는 것.
+
+        http.authorizeRequests()
+                .antMatchers("/admin/**")
+                .hasAnyAuthority("ROLE_ADMIN");
+
+
 
         http.formLogin()
                 .loginPage("/member/login")
-                .failureHandler(getFailureHandler())
+                .successHandler(getSuccessHandler()) // 로그인에 성공했을 때
+                .failureHandler(getFailureHandler()) // 로그인에 실패했을 때.
                 .permitAll();
+
+//        http.formLogin()
+//                .loginPage("/member/login")
+//                .successHandler(getSuccessHandler2())
+//                .failureHandler(getFailureHandler()) // 로그인에 실패했을 때.
+//                .permitAll();
+
 
         http.logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout")) // 해당 주소를 치면 로그아웃이 되며
                 .logoutSuccessUrl("/") // 그것을 성공하면 / 로 이동하게 되고
                 .invalidateHttpSession(true); // 세션을 다 초기화한다.
+
+
+        http.exceptionHandling()
+                .accessDeniedPage("/error/denied");
+
 
         super.configure(http);
     }
