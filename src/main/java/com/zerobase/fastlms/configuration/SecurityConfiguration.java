@@ -38,7 +38,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     UserAuthenticationSuccessHandler getSuccessHandler() {
-        return new UserAuthenticationSuccessHandler(memberLoginRepository);
+        return new UserAuthenticationSuccessHandler(memberService);
     }
 
 
@@ -69,6 +69,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.formLogin()
                 .loginPage("/member/login")
+                .usernameParameter("username")
+                .passwordParameter("password")
                 .successHandler(getSuccessHandler()) // 로그인에 성공했을 때
                 .failureHandler(getFailureHandler()) // 로그인에 실패했을 때.
                 .permitAll();

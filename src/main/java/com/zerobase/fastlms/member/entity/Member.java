@@ -40,18 +40,18 @@ public class Member {
     // ROLE_SEMI_USER, ROLE_USER, ROLE_SPECIAL_USER ..... ROLE_ADMIN
     private boolean adminYn;
 
-    private LocalDateTime loginDt;
-    private String connectIp;
-    private String connectUserAgent;
+//    private LocalDateTime loginDt;
+//    private String connectIp;
+//    private String connectUserAgent;
 
-    public String getClientIp(HttpServletRequest req) { // ip 가져오기
-        connectIp = req.getHeader("X-Forwarded-For");
-        if (connectIp == null) connectIp = req.getRemoteAddr();
-        return connectIp;
-    }
-
-    public String getUserAgent(HttpServletRequest req) {
-        connectUserAgent = req.getHeader("User-Agent");
-        return connectUserAgent;
-    }
+//    public String getClientIp(HttpServletRequest req) { // ip 가져오기
+//        connectIp = req.getHeader("X-Forwarded-For");
+//        if (connectIp == null) connectIp = req.getRemoteAddr();
+//        return connectIp;
+//    }
+//
+//    public String getUserAgent(HttpServletRequest req) {
+//        connectUserAgent = req.getHeader("User-Agent");
+//        return connectUserAgent;
+//    }
 }

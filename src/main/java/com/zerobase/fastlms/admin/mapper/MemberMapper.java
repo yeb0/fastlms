@@ -3,6 +3,7 @@ package com.zerobase.fastlms.admin.mapper;
 
 import com.zerobase.fastlms.admin.dto.LoginHistoryDto;
 import com.zerobase.fastlms.admin.dto.MemberDto;
+import com.zerobase.fastlms.admin.model.MemberParam;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -10,8 +11,9 @@ import java.util.List;
 @Mapper
 public interface MemberMapper {
 
-    List<MemberDto> selectList(MemberDto parameter);
+    long selectListCount(MemberParam parameter);
+    List<MemberDto> selectList(MemberParam parameter);
 
-    List<LoginHistoryDto> selectList2(LoginHistoryDto parameter);
+//    List<LoginHistoryDto> selectList2(LoginHistoryDto parameter);
 
 }

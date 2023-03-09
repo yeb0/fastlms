@@ -3,17 +3,101 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zerobase.fastlms.admin.mapper.MemberMapper">
-    <select id="selectList" resultType="com.zerobase.fastlms.admin.dto.MemberDto">
 
-        select *
+
+    <select id="selectListCount"
+            parameterType="com.zerobase.fastlms.admin.model.MemberParam"
+            resultType="long">
+
+        select count(*)
         from member
-        left outer join login_history
-        on member.user_id = login_history.user_id;
+        where 1 = 1
+
+        <if test="searchType != null and searchValue != null">
+            <choose>
+                <when test="searchType == 'userId'">
+                    and user_id like concat('%', #{searchValue}, '%')
+                </when>
+                <when test="searchType == 'userName'">
+                    and user_name like concat('%', #{searchValue}, '%')
+                </when>
+                <when test="searchType == 'phone'">
+                    and phone like concat('%', #{searchValue}, '%')
+                </when>
+                <otherwise>
+                    and
+                    (
+                    user_id like concat('%', #{searchValue}, '%')
+                    or
+                    user_name like concat('%', #{searchValue}, '%')
+                    or
+                    phone like concat('%', #{searchValue}, '%')
+                    )
+                </otherwise>
+            </choose>
+        </if>
+
+
+
 
     </select>
-    <select id="selectList2" resultType="com.zerobase.fastlms.admin.dto.LoginHistoryDto">
 
 
+    <select id="selectList"
+            parameterType="com.zerobase.fastlms.admin.model.MemberParam"
+            resultType="com.zerobase.fastlms.admin.dto.MemberDto">
+
+<!--    select member.user_id, member.user_name, member.phone, member.email_auth_yn, member.reg_dt, member.admin_yn, L.login_dt-->
+<!--    from member-->
+<!--            left join (-->
+<!--        SELECT user_id, login_dt, connect_IP, connect_user_agent , user_number-->
+<!--        FROM login_history-->
+<!--        WHERE (user_id, login_dt) IN (-->
+<!--            SELECT user_id, MAX(login_dt) AS max_date-->
+<!--            FROM minicampus.login_history-->
+<!--            GROUP BY user_id-->
+<!--        )-->
+<!--    ) L on member.user_id = L.user_id;-->
+
+<!--        select *-->
+<!--        from member-->
+<!--        where 1 = 1-->
+
+        select *
+        from member as M
+        left join (SELECT l.user_id, l.login_dt, l.connect_IP, l.connect_user_agent , l.user_number
+        FROM minicampus.login_history AS l
+        JOIN (
+        SELECT user_id, MAX(login_dt) AS max_date
+        FROM minicampus.login_history
+        GROUP BY user_id
+        ) AS m ON l.user_id = m.user_id AND l.login_dt = m.max_date) L on M.user_id = L.user_id
+
+        <if test="searchType != null and searchValue != null">
+            <choose>
+                <when test="searchType == 'userId'">
+                    and user_id like concat('%', #{searchValue}, '%')
+                </when>
+                <when test="searchType == 'userName'">
+                    and user_name like concat('%', #{searchValue}, '%')
+                </when>
+                <when test="searchType == 'phone'">
+                    and phone like concat('%', #{searchValue}, '%')
+                </when>
+                <otherwise>
+                    and
+                    (
+                    user_id like concat('%', #{searchValue}, '%')
+                    or
+                    user_name like concat('%', #{searchValue}, '%')
+                    or
+                    phone like concat('%', #{searchValue}, '%')
+                    )
+                </otherwise>
+            </choose>
+        </if>
+
+        limit #{pageStart}, #{pageEnd}
 
     </select>
 </mapper>

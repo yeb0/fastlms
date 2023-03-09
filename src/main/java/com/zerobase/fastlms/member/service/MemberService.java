@@ -1,6 +1,8 @@
 package com.zerobase.fastlms.member.service;
 
+import com.zerobase.fastlms.admin.dto.LoginHistoryDto;
 import com.zerobase.fastlms.admin.dto.MemberDto;
+import com.zerobase.fastlms.admin.model.MemberParam;
 import com.zerobase.fastlms.member.entity.LoginHistory;
 import com.zerobase.fastlms.member.entity.Member;
 import com.zerobase.fastlms.member.model.MemberInput;
@@ -12,8 +14,9 @@ import java.util.List;
 
 public interface MemberService extends UserDetailsService {
 
-    boolean login(HttpServletRequest request, MemberInput parameter);
+//    boolean login(HttpServletRequest request, MemberInput parameter);
 
+    boolean login(String userId, String userAgent, String ipAddress);
     boolean register(MemberInput parameter);
 
     /**
@@ -40,6 +43,14 @@ public interface MemberService extends UserDetailsService {
     /**
      * 회원 목록 리턴(관리자에서만 사용가능)
      */
-    List<MemberDto> list();
+    List<MemberDto> list(MemberParam parameter);
+
+
+    /**
+     * 회원 상세 정보
+     */
+    MemberDto detail(String userId);
+
+//    List<LoginHistoryDto> logList();
 
 }

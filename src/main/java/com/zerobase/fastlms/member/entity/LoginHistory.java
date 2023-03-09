@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
@@ -15,8 +16,11 @@ import java.time.LocalDateTime;
 @Entity
 @ToString
 public class LoginHistory {
-    @Id
     private String userId;
+
+    @Id
+    @GeneratedValue
+    private int userNumber;
 
     private LocalDateTime loginDt;
     private String connectIp;

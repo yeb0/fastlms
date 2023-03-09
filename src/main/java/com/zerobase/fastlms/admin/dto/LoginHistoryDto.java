@@ -1,6 +1,10 @@
 package com.zerobase.fastlms.admin.dto;
 
+import com.zerobase.fastlms.member.entity.LoginHistory;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -8,9 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class LoginHistoryDto {
-    int userNumber;
     String userId;
+    int userNumber;
     LocalDateTime loginDt;
     String connectIp;
     String connectUserAgent;
@@ -24,5 +31,15 @@ public class LoginHistoryDto {
     public String getUserAgent(HttpServletRequest req) {
         connectUserAgent = req.getHeader("User-Agent");
         return connectUserAgent;
+    }
+
+    public static LoginHistoryDto of(LoginHistory loginHistory) {
+        return LoginHistoryDto.builder()
+                .userId(loginHistory.getUserId())
+                .userNumber(loginHistory.getUserNumber())
+                .loginDt(loginHistory.getLoginDt())
+                .connectIp(loginHistory.getConnectIp())
+                .connectUserAgent(loginHistory.getConnectUserAgent())
+                .build();
     }
 }

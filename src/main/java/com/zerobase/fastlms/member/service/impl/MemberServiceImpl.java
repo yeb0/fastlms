@@ -1,7 +1,9 @@
 package com.zerobase.fastlms.member.service.impl;
 
+import com.zerobase.fastlms.admin.dto.LoginHistoryDto;
 import com.zerobase.fastlms.admin.dto.MemberDto;
 import com.zerobase.fastlms.admin.mapper.MemberMapper;
+import com.zerobase.fastlms.admin.model.MemberParam;
 import com.zerobase.fastlms.components.MailComponents;
 import com.zerobase.fastlms.member.entity.LoginHistory;
 import com.zerobase.fastlms.member.entity.Member;
@@ -19,6 +21,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
@@ -38,21 +41,28 @@ public class MemberServiceImpl implements MemberService {
     private final MemberMapper memberMapper;
 
     @Override
-    public boolean login(HttpServletRequest request, MemberInput parameter) {
-        Optional<Member> optionalMember = memberRepository.findById(parameter.getUserId());
-        if (optionalMember.isPresent()) {
-            // 현재 userId에 해당하는 데이터가 존재
-            return false;
-        }
+    public boolean login(String userId, String userAgent, String ipAddress) {
+//        Optional<Member> optionalMember = memberRepository.findById(parameter.getUserId());
+//        if (optionalMember.isPresent()) {
+//            // 현재 userId에 해당하는 데이터가 존재
+//            return false;
+//        }
 
-        LoginHistory loginMember = LoginHistory.builder()
-                .userId(parameter.getUserId())
+//        LoginHistory loginMember = LoginHistory.builder()
+//                .userId(parameter.getUserId())
+//                .loginDt(LocalDateTime.now())
+//                .connectIp(String.valueOf(request))
+//                .connectUserAgent(String.valueOf(request))
+//                .build();
+//
+//        memberLoginRepository.save(loginMember);
+        LoginHistory loginHistory = LoginHistory.builder()
+                .userId(userId)
+                .connectUserAgent(userAgent)
+                .connectIp(ipAddress)
                 .loginDt(LocalDateTime.now())
-                .connectIp(String.valueOf(request))
-                .connectUserAgent(String.valueOf(request))
                 .build();
-
-        memberLoginRepository.save(loginMember);
+        memberLoginRepository.save(loginHistory);
 
         return true;
     }
@@ -215,16 +225,47 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public List<MemberDto> list() {
+    public List<MemberDto> list(MemberParam parameter) {
 
-        MemberDto parameter = new MemberDto();
-
+        long totalCount = memberMapper.selectListCount(parameter);
         List<MemberDto> list = memberMapper.selectList(parameter);
+        if (!CollectionUtils.isEmpty(list)) {
+            int i = 0;
+            for (MemberDto x : list) {
+                x.setTotalCount(totalCount);
+                x.setSeq(totalCount - parameter.getPageStart() - i);
+                i++;
+            }
+        }
         return list;
 
 //        return memberRepository.findAll();
 
     }
+
+    @Override
+    public MemberDto detail(String userId) {
+
+        Optional<Member> optionalMember = memberRepository.findById(userId);
+        if (!optionalMember.isPresent()) {
+            return null;
+        }
+
+        Member member = optionalMember.get();
+
+        return MemberDto.of(member);
+    }
+//    @Override
+//    public List<LoginHistoryDto> logList() {
+//
+//        LoginHistoryDto parameter = new LoginHistoryDto();
+//
+//        List<LoginHistoryDto> list = memberMapper.selectList2(parameter);
+//        return list;
+//
+////        return memberRepository.findAll();
+//
+//    }
 
 
     @Override
