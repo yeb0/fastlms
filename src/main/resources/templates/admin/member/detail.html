@@ -9,6 +9,14 @@
       border-collapse: collapse;
     }
     .detail table th, .detail table td {
+      border:solid 1px #539165;
+    }
+
+    .loginHistory table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .loginHistory table th, .loginHistory table td {
       border:solid 1px #000;
     }
   </style>
@@ -26,9 +34,9 @@
   |
   <a href="/member/logout">로그아웃</a>
   <br/>
-  <hr/>
 </div>
 
+<hr/>
 
 
   <div class = "detail">
@@ -80,6 +88,40 @@
 
 
   </div>
+
+  <hr/>
+
+    <div class="loginHistory">
+        <table>
+          <thead>
+            <tr>
+              <th>NO</th>
+              <th>로그인 일자</th>
+              <th>접속 IP</th>
+              <th>접속 UserAgent</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="x : ${loginHistory.list}">
+
+              <td th:text="${x.userNumber}">1</td>
+              <td>
+                <p th:text="${#temporals.format(x.loginDt, 'yyyy-MM-dd hh:mm:ss')}">2023.03.10</p>
+              </td>
+              <td>
+                <p th:text="${x.connectIp}">123.0.0.0</p>
+              </td>
+              <td>
+                <p th:text="${x.connectUserAgent}">Agent</p>
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+    </div>
+
+
+
 
 </body>
 </html>

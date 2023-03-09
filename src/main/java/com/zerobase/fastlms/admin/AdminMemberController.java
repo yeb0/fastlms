@@ -2,6 +2,7 @@ package com.zerobase.fastlms.admin;
 
 
 import com.zerobase.fastlms.admin.dto.LoginHistoryDto;
+import com.zerobase.fastlms.admin.dto.LoginHistoryListDto;
 import com.zerobase.fastlms.admin.dto.MemberDto;
 import com.zerobase.fastlms.admin.model.MemberParam;
 import com.zerobase.fastlms.member.entity.Member;
@@ -51,6 +52,10 @@ public class AdminMemberController {
 
         MemberDto member = memberService.detail(parameter.getUserId());
         model.addAttribute("member", member); // view
+
+        LoginHistoryListDto loginHistoryListDto = memberService.loginHistoryAllListByUserId(
+                parameter.getUserId(), parameter.getPageIndex(), parameter.getPageSize());
+        model.addAttribute("loginHistory", loginHistoryListDto);
 
         return "admin/member/detail";
     }

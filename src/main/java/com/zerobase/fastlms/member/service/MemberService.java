@@ -1,15 +1,12 @@
 package com.zerobase.fastlms.member.service;
 
-import com.zerobase.fastlms.admin.dto.LoginHistoryDto;
+import com.zerobase.fastlms.admin.dto.LoginHistoryListDto;
 import com.zerobase.fastlms.admin.dto.MemberDto;
 import com.zerobase.fastlms.admin.model.MemberParam;
-import com.zerobase.fastlms.member.entity.LoginHistory;
-import com.zerobase.fastlms.member.entity.Member;
 import com.zerobase.fastlms.member.model.MemberInput;
 import com.zerobase.fastlms.member.model.ResetPasswordInput;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface MemberService extends UserDetailsService {
@@ -52,5 +49,7 @@ public interface MemberService extends UserDetailsService {
     MemberDto detail(String userId);
 
 //    List<LoginHistoryDto> logList();
+
+    LoginHistoryListDto loginHistoryAllListByUserId(String userId, long pageIndex, long pageSize);
 
 }

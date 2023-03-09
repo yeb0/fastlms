@@ -1,7 +1,9 @@
 package com.zerobase.fastlms.member.service.impl;
 
 import com.zerobase.fastlms.admin.dto.LoginHistoryDto;
+import com.zerobase.fastlms.admin.dto.LoginHistoryListDto;
 import com.zerobase.fastlms.admin.dto.MemberDto;
+import com.zerobase.fastlms.admin.mapper.LoginHistoryMapper;
 import com.zerobase.fastlms.admin.mapper.MemberMapper;
 import com.zerobase.fastlms.admin.model.MemberParam;
 import com.zerobase.fastlms.components.MailComponents;
@@ -23,7 +25,6 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +40,8 @@ public class MemberServiceImpl implements MemberService {
     private final MemberLoginRepository memberLoginRepository;
 
     private final MemberMapper memberMapper;
+
+    private final LoginHistoryMapper loginHistoryMapper;
 
     @Override
     public boolean login(String userId, String userAgent, String ipAddress) {
@@ -254,6 +257,24 @@ public class MemberServiceImpl implements MemberService {
         Member member = optionalMember.get();
 
         return MemberDto.of(member);
+    }
+
+    @Override
+    public LoginHistoryListDto loginHistoryAllListByUserId(String userId, long pageIndex, long pageSize) {
+
+        long totalCount = loginHistoryMapper.logCntNumByUserId(userId);
+        List<LoginHistoryDto> result;
+        if(totalCount > 0) {
+            result = loginHistoryMapper.logHistoryByUserId(userId, (pageIndex - 1) * pageSize, pageSize);
+            for(int i = 0; i < result.size(); ++i) {
+                LoginHistoryDto loginHistoryDto = result.get(i);
+                loginHistoryDto.setSeq(totalCount - ((pageIndex - 1) * pageSize + i));
+            }
+        } else {
+            result = new ArrayList<>();
+        }
+
+        return new LoginHistoryListDto(totalCount, result);
     }
 //    @Override
 //    public List<LoginHistoryDto> logList() {

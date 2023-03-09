@@ -17,10 +17,11 @@ import java.time.LocalDateTime;
 @Builder
 public class LoginHistoryDto {
     String userId;
-    int userNumber;
     LocalDateTime loginDt;
     String connectIp;
     String connectUserAgent;
+    long userNumber;
+    long seq;
 
     String getClientIp(HttpServletRequest req) { // ip 가져오기
         connectIp = req.getHeader("X-Forwarded-For");
