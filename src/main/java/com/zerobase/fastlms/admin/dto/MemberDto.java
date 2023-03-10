@@ -29,6 +29,7 @@ public class MemberDto {
     String resetPasswordKey;
     LocalDateTime resetPasswordLimitDt;
     boolean adminYn;
+    String userStatus;
 
 
     LocalDateTime loginDt;
@@ -67,7 +68,7 @@ public class MemberDto {
                 .resetPasswordLimitDt(member.getResetPasswordLimitDt())
 
                 .adminYn(member.isAdminYn())
-
+                .userStatus(member.getUserStatus())
                 .build();
     }
 }

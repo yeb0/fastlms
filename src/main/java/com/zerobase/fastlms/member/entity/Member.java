@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor // 기본 생성자
 @AllArgsConstructor // 모든 객체 생성자
 @Data // getter, setter 에 대한 data
-public class Member {
+public class Member implements MemberCode{
 
     @Id
     private String userId;
@@ -39,6 +39,8 @@ public class Member {
     // 준회원/정회원/특별회원 ..... 관리자
     // ROLE_SEMI_USER, ROLE_USER, ROLE_SPECIAL_USER ..... ROLE_ADMIN
     private boolean adminYn;
+
+    private String userStatus; // 이용 가능한 상태, 정지 상태
 
 //    private LocalDateTime loginDt;
 //    private String connectIp;

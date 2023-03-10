@@ -3,6 +3,11 @@ package com.zerobase.fastlms.admin.model;
 import lombok.Data;
 
 @Data
-public class MemberParam extends CommonParam{
+public class MemberInput {
+
     String userId;
+    String userStatus;
+    String password;
+
+
 }

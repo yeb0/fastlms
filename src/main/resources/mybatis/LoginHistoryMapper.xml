@@ -16,7 +16,10 @@
         from login_history
         where user_id = #{userId}
 
-<!--        select *-->
+        order by login_dt desc
+
+
+        <!--        select *-->
 <!--        from login_history-->
 <!--        where user_id = 's110528@nate.com'-->
     </select>

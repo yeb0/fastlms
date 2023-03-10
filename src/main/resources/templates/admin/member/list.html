@@ -34,19 +34,8 @@
 </head>
 <body>
 <h1>관리자 회원 관리</h1>
-<div>
-  <a href="/admin/main.do">관리자 메인</a>
-  |
-  <a href="/admin/member/list.do">회원 관리</a>
-  |
-  <a href="#">카테고리 관리</a>
-  |
-  <a href="#">강의 관리</a>
-  |
-  <a href="/member/logout">로그아웃</a>
-  <br/>
-  <hr/>
-</div>
+<div th:replace="/fragments/layout.html :: fragment-admin-body-menu"></div>
+
 
 
 
@@ -104,7 +93,7 @@
         <td th:text="${x.seq}">1</td>
         <td>
           <a th:text="${x.userId}"
-             th:href="${'detail.do?userId=' + x.userId}">
+              th:href="${'detail.do?userId=' + x.userId}">
             s110528@nate.com</a>
         </td>
         <td th:text="${x.userName}">우상훈</td>

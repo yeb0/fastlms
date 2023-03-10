@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zerobase.fastlms.admin.mapper.MemberMapper">
+<mapper namespace="com.zerobase.fastlms.course.mapper.CourseMapper">
 
     <sql id="selectListWhere">
         <if test="searchType != null and searchValue != null">
@@ -30,46 +30,25 @@
         </if>
     </sql>
 
-
     <select id="selectListCount" resultType="long">
 
         select count(*)
-        from member
+        from course
+        where 1 = 1
+        <include refid="selectListWhere"/>
+
+
+    </select>
+
+    <select id="selectList" resultType="com.zerobase.fastlms.course.dto.CourseDto">
+
+
+        select *
+        from course
         where 1 = 1
 
         <include refid="selectListWhere"/>
-    </select>
-
-
-    <select id="selectList" resultType="com.zerobase.fastlms.admin.dto.MemberDto">
-
-<!--    select member.user_id, member.user_name, member.phone, member.email_auth_yn, member.reg_dt, member.admin_yn, L.login_dt-->
-<!--    from member-->
-<!--            left join (-->
-<!--        SELECT user_id, login_dt, connect_IP, connect_user_agent , user_number-->
-<!--        FROM login_history-->
-<!--        WHERE (user_id, login_dt) IN (-->
-<!--            SELECT user_id, MAX(login_dt) AS max_date-->
-<!--            FROM minicampus.login_history-->
-<!--            GROUP BY user_id-->
-<!--        )-->
-<!--    ) L on member.user_id = L.user_id;-->
-
-<!--        select *-->
-<!--        from member-->
-<!--        where 1 = 1-->
-
-        select *
-        from member as M
-        left join (SELECT l.user_id, l.login_dt, l.connect_IP, l.connect_user_agent , l.user_number
-        FROM minicampus.login_history AS l
-        JOIN (
-        SELECT user_id, MAX(login_dt) AS max_date
-        FROM minicampus.login_history
-        GROUP BY user_id
-        ) AS m ON l.user_id = m.user_id AND l.login_dt = m.max_date) L on M.user_id = L.user_id
-
-        <include refid="selectListWhere"/>
+        order by reg_dt desc
 
         limit #{pageStart}, #{pageEnd}
 

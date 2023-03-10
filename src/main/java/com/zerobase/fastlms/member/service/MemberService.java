@@ -52,4 +52,13 @@ public interface MemberService extends UserDetailsService {
 
     LoginHistoryListDto loginHistoryAllListByUserId(String userId, long pageIndex, long pageSize);
 
+    /**
+     * 회원상태변경
+     */
+    boolean updateStatus(String userId, String userStatus);
+
+    /**
+     *회원비밀번호 초기화
+     */
+    boolean updatePassword(String userId, String password);
 }

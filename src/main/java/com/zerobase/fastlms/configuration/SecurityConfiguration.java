@@ -47,6 +47,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable(); // disable .. 작동을 안 하게 하는 것. 이게 되면 보안적인 이슈가 있을 수 있음
+        http.headers().frameOptions().sameOrigin();
 
 
         /**
