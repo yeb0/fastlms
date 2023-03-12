@@ -21,6 +21,12 @@ public class MemberInput {
     private String connectIp;
     private String connectUserAgent;
 
+    private String newPassword;
+
+    private String zipcode;
+    private String addr;
+    private String addrDetail;
+
     public String getClientIp(HttpServletRequest req) { // ip 가져오기
         connectIp = req.getHeader("X-Forwarded-For");
         if (connectIp == null) connectIp = req.getRemoteAddr();

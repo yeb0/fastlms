@@ -6,8 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 

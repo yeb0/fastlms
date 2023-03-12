@@ -19,4 +19,8 @@ public class CourseInput {
 
     String idList;
 
+    //ADD
+    String filename;
+    String urlFilename;
+
 }

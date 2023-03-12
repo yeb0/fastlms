@@ -12,4 +12,6 @@ import java.util.List;
 public interface TakeCourseMapper {
     long selectListCount(TakeCourseParam parameter); // 1 페이징 처리는 대부분 이렇게 두 가지로
     List<TakeCourseDto> selectList(TakeCourseParam parameter); // 2 페이징 처리는 대부분 이렇게 두 가지로
+
+    List<TakeCourseDto> selectListMyCourse(TakeCourseParam parameter);
 }

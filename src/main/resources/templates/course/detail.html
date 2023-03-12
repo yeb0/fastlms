@@ -62,13 +62,17 @@
         <h2>강의명: <span th:text="${detail.subject}">강의</span></h2>
 
             <div th:utext="${detail.contents}">
-
             </div>
 
             <div>
                 <p>가격 : <span th:text="${detail.price}"></span></p>
                 <p>할인 가격 : <span th:text="${detail.salePrice}"></span></p>
             </div>
+
+        <div>
+            <img th:src="${detail.urlFilename}"/>
+        </div>
+
 
         <div>
             <form id="submitForm" method="post">

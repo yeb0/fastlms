@@ -19,6 +19,7 @@ public class MemberDto {
     String phone;
     String password;
     LocalDateTime regDt;
+    LocalDateTime udtDt;
 
 
     boolean emailAuthYn;
@@ -35,6 +36,11 @@ public class MemberDto {
     LocalDateTime loginDt;
     String connectIp;
     String connectUserAgent;
+
+    String zipcode;
+    String addr;
+    String addrDetail;
+
     // 추가컬럼
     long totalCount;
     long seq;
@@ -60,6 +66,7 @@ public class MemberDto {
 //                .password(member.getPassword())
 
                 .regDt(member.getRegDt())
+                .udtDt(member.getUdtDt())
                 .emailAuthYn(member.isEmailAuthYn())
                 .emailAuthDt(member.getEmailAuthDt())
                 .emailAuthKey(member.getEmailAuthKey())
@@ -69,6 +76,10 @@ public class MemberDto {
 
                 .adminYn(member.isAdminYn())
                 .userStatus(member.getUserStatus())
+
+                .zipcode(member.getZipcode())
+                .addr(member.getAddr())
+                .addrDetail(member.getAddrDetail())
                 .build();
     }
 }
