@@ -47,7 +47,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/favicon.ico", "/files/**"); // 해당경로 무시하기 밑의 오버라이딩 된 메서드와 다른 것임 WebSecurity web <-> HttpSecurity http
 
-        super.configure(web);
+//        super.configure(web);
     }
 
     @Override
@@ -79,8 +79,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .loginPage("/member/login")
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .successHandler(getSuccessHandler()) // 로그인에 성공했을 때
                 .failureHandler(getFailureHandler()) // 로그인에 실패했을 때.
+                .successHandler(getSuccessHandler()) // 로그인에 성공했을 때
                 .permitAll();
 
 //        http.formLogin()
@@ -93,7 +93,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout")) // 해당 주소를 치면 로그아웃이 되며
                 .logoutSuccessUrl("/") // 그것을 성공하면 / 로 이동하게 되고
-                .invalidateHttpSession(true); // 세션을 다 초기화한다.
+                .invalidateHttpSession(true) // 세션을 다 초기화한다.
+                .permitAll();
+
 
 
         http.exceptionHandling()

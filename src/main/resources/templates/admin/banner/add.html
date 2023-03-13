@@ -44,7 +44,7 @@
 
 </head>
 <body>
-<h1>강의 관리 - 강의 등록</h1>
+<h1>배너 관리 - 배너 등록</h1>
 <div th:replace="/fragments/layout.html :: fragment-admin-body-menu"></div>
 
 <div class = "detail">
@@ -53,94 +53,56 @@
     <table>
       <tbody>
       <tr>
-        <th>강좌 카테고리</th>
+        <th>배너명</th>
         <td>
-          <select name="categoryId" required>
-            <option value=""> 카테고리 선택 </option>
-            <option
-                    th:selected="${detail.categoryId == x.id}"
-                    th:each="x : ${category}" th:value="${x.id}" th:text="${x.categoryName}"> 기획 </option>
-          </select>
-        </td>
-      </tr>
-
-        <tr>
-          <th>
-            강좌명
-          </th>
-          <td>
-            <input th:value="${detail.subject}" type="text" name="subject" required placeholder="강의명 입력"/>
-          </td>
-        </tr>
-
-      <tr>
-        <th>
-          키워드
-        </th>
-        <td>
-          <input th:value="${detail.keyword}" type="text" name="keyword" required placeholder="키워드 입력"/>
+          <input th:type="text" name="name" required placeholder="배너명을 입력"/>
         </td>
       </tr>
 
       <tr>
-        <th>
-          요약문구
-        </th>
+        <th>배너파일</th>
         <td>
-          <textarea th:text="${detail.summary}"  name="summary" required placeholder="요약문구 입력"></textarea>
+          <input type="file" name="file" required/>
         </td>
       </tr>
 
       <tr>
-        <th>
-          내용
-        </th>
+        <th>링크 주소</th>
         <td>
-          <textarea th:text="${detail.contents}" id="contents" name="contents"  placeholder="내용 입력"></textarea>
+          <input type="text" name="linkUrl" required placeholder="링크 주소를 입력"/>
         </td>
       </tr>
 
       <tr>
-        <th>
-          정가
-        </th>
+        <th>오픈 방법</th>
+        <select name="openType" _required>
+          <option value="">오픈방법 선택</option>
+          <!-- 구현할것 -->
+          <!-- 오픈방법이 무엇인지 모르겠습니다... -->
+        </select>
+      </tr>
+
+      <tr>
+        <th>정렬 순서</th>
         <td>
-          <input th:value="${detail.price}" type="text" name="price" required placeholder="정가 입력"/>
+          <input type="text" name="sortValue" value="0" required placeholder="정렬순서를 입력"/>
         </td>
       </tr>
 
       <tr>
-        <th>
-          판매가
-        </th>
+        <th>공개 여부</th>
         <td>
-          <input th:value="${detail.salePrice}" type="text" name="salePrice" required placeholder="판매가 입력"/>
+          <input type="checkbox" name="usingYn" placeholder="공개여부를 입력"/>
         </td>
       </tr>
 
-      <tr>
-        <th>
-          할인 종료일
-        </th>
-        <td>
-          <input th:value="${detail.saleEndDt}" type="text" name="saleEndDtText"  placeholder="할인 종료일 입력"/>
-        </td>
-      </tr>
-
-      <tr>
-        <th>첨부파일</th>
-        <td>
-          <input type="file" name="file" />
-        </td>
-      </tr>
 
       </tbody>
     </table>
 
     <div class = "buttons">
-      <button th:if = "${editMode}" type="submit"> 강의 수정 하기</button>
-      <button th:if = "${!editMode}" type="submit"> 강의 등록 하기</button>
-      <a href="/admin/course/list.do">목록으로 돌아가기</a>
+      <button type="submit"> 배너 등록 하기</button>
+      <a href="/admin/banner/list.do">목록으로 돌아가기</a>
     </div>
   </form>
 

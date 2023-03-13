@@ -2,15 +2,47 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    <script>
+        $( document ).ready( function() {
+            $( '.bxslider' ).bxSlider({
+                touchEnabled : false
+            });
+        });
+    </script>
     <title>Main</title>
+    <style>
+        .bxslider {
+            position: relative;
+            width : 150px;
+        }
+        .bx-wrapper {
+            width : 150px;
+            max-width : 100%;
+        }
+    </style>
 </head>
     <body>
         <h1>Main Page</h1>
         <div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
 
 
-        <div>
-            <img src="/files/2023/03/12/da26db17df6b438f884e08af0723b91e.png"/>
+<!--        <div>-->
+<!--            <img src="/files/2023/03/12/da26db17df6b438f884e08af0723b91e.png"/>-->
+<!--        </div>-->
+        <div class="bx-wrapper"> <!-- 개발자도구로 크기 설정 -->
+            <div class="bxslider">
+                <tr th:each="x : ${list}">
+                        <a th:href="${x.linkUrl}">
+                            <!-- 링크 이동하지 않는 이슈  -->
+                            <!-- 만약 링크를 넣는다 해도 관리자가 직접 링크를 다 쳐야 되는 건지? -->
+                            <!-- Alter 텍스트 대체 텍스트 == alt... 이미지를 대체할 해당 배너제목 텍스트 구현X -> "" 공백으로 처리함 -->
+                                <img th:src="${x.imageUrl}" alt="" width="150" height="150">
+                        </a>
+                </tr>
+            </div>
         </div>
 
 

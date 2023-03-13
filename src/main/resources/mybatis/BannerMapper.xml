@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zerobase.fastlms.banner.mapper.BannerMapper">
+
+
+    <select id="select" resultType="com.zerobase.fastlms.banner.dto.BannerDto">
+
+        select count(*)
+        from banner
+        limit #{pageStart}, #{pageEnd}
+
+    </select>
+
+    <select id="selectListCount" resultType="long">
+        select count(*)
+        from banner
+        where 1 = 1
+    </select>
+
+
+
+    <select id="selectList" resultType="com.zerobase.fastlms.banner.dto.BannerDto">
+
+        select id, name, image_url, reg_dt
+        from banner
+        where using_yn = 1
+        order by sort_value
+
+<!--        where 1 = 1-->
+<!--        limit #{pageStart}, #{pageEnd}-->
+
+    </select>
+
+    <select id="selectListCountNumber" resultType="com.zerobase.fastlms.banner.dto.BannerDto">
+
+        select id, name, image_url, reg_dt
+        from banner
+        where using_yn = 1
+        order by sort_value
+
+        <!--        where 1 = 1-->
+        <!--        limit #{pageStart}, #{pageEnd}-->
+
+    </select>
+</mapper>

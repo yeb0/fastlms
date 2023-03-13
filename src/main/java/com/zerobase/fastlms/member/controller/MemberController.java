@@ -34,8 +34,8 @@ public class MemberController {
     private final TakeCourseService takeCourseService;
 
 
-//    @RequestMapping("/member/login")
-    @GetMapping("/member/login")
+    @RequestMapping("/member/login")
+//    @GetMapping("/member/login")
     public String login() {
         return "member/login";
     }
