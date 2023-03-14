@@ -32,6 +32,9 @@ public class UserAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuc
         String userId = userDetails.getUsername();
 
         String userAgent = request.getHeader("User-Agent");
+        /**
+         * Utils 클래스에 적어두었습니다.
+         */
         String ipAddress = request.getRemoteAddr();
 
         memberService.login(userId, userAgent, ipAddress);
